@@ -1,0 +1,19 @@
+<h1>Ответы учеников</h1>
+<table>
+    <tr>
+        <th>Учитель</th>
+        <th>Домашнее задание</th>
+        <th>Ученик</th>
+        <th>Ответ</th>
+        <th>Оценка</th>
+    </tr>
+    {% for item in answers %}
+    <tr>
+        <td>{{ item.homework.teacher }}</td>
+        <td>{{ item.homework.title }}</td>
+        <td>{{ item.user.name }}</td>
+        <td>{{ item.answer_text }}</td>
+        <td>{{ item.grade }}</td>
+    </tr>
+    {% endfor %}
+</table>

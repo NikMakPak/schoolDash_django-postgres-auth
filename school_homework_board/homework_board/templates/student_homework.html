@@ -1,0 +1,23 @@
+<h1>Домашние задания</h1>
+<table>
+    <tr>
+        <th>Заголовок</th>
+        <th>Предмет</th>
+        <th>Учитель</th>
+        <th>Описание</th>
+        <th>Срок сдачи</th>
+        <th>Ответ</th>
+    </tr>
+    {% for item in homework %}
+    <tr>
+        <td>{{ item.title }}</td>
+        <td>{{ item.subject }}</td>
+        <td>{{ item.teacher }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.due_date }}</td>
+        <td>
+            <input type="text" name="answer" />
+        </td>
+    </tr>
+    {% endfor %}
+</table>
