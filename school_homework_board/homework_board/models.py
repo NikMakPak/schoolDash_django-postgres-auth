@@ -1,13 +1,5 @@
 from django.db import models
-
-class Role(models.Model):
-    name = models.TextField()
-
-class User(models.Model):
-    name = models.TextField()
-    email = models.TextField()
-    password_hash = models.TextField()
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+from django.contrib.auth.models import User
 
 class Homework(models.Model):
     title = models.TextField()
