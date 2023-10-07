@@ -15,9 +15,14 @@
         <td>{{ item.teacher }}</td>
         <td>{{ item.description }}</td>
         <td>{{ item.due_date }}</td>
-        <td>
-            <input type="text" name="answer" />
-        </td>
     </tr>
     {% endfor %}
+</table>
+<table>
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <!-- <input type="hidden" name="homework" id="id_homework" value="{{ item.title }}"> -->
+    <input type="submit" value="Submit">
+</form>
 </table>
