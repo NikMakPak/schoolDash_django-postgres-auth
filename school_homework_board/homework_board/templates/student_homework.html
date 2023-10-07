@@ -1,28 +1,37 @@
-<h1>Домашние задания</h1>
-<table>
-    <tr>
-        <th>Заголовок</th>
-        <th>Предмет</th>
-        <th>Учитель</th>
-        <th>Описание</th>
-        <th>Срок сдачи</th>
-        <th>Ответ</th>
-    </tr>
-    {% for item in homework %}
-    <tr>
-        <td>{{ item.title }}</td>
-        <td>{{ item.subject }}</td>
-        <td>{{ item.teacher }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.due_date }}</td>
-    </tr>
-    {% endfor %}
-</table>
-<table>
-<form method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <!-- <input type="hidden" name="homework" id="id_homework" value="{{ item.title }}"> -->
-    <input type="submit" value="Submit">
-</form>
-</table>
+{% if user.is_authenticated %}
+    <p>Вы вошли как >>  {{ user.first_name }} {{ user.last_name }}</p>
+    <h1 style="text-align: center;">Домашние задания</h1>
+    
+        <table style="width: 100%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+            <tr>
+                <th style="border: 1px solid black;">Заголовок</th>
+                <th style="border: 1px solid black;">Предмет</th>
+                <th style="border: 1px solid black;">Учитель</th>
+                <th style="border: 1px solid black;">Описание</th>
+                <th style="border: 1px solid black;">Срок сдачи</th>
+            </tr>
+            {% for item in homework %}
+            <tr>
+                <td style="border: 1px solid black;">{{ item.title }}</td>
+                <td style="border: 1px solid black;">{{ item.subject }}</td>
+                <td style="border: 1px solid black;">{{ item.teacher }}</td>
+                <td style="border: 1px solid black;">{{ item.description }}</td>
+                <td style="border: 1px solid black;">{{ item.due_date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+            <form style="display: flex; flex-direction: column; width: 500px;" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+{% else %}
+        {% url 'users-login' as login_url %}
+        {% if not login_url %}
+            <p>В настоящее время страница входа недоступна. Попробуйте позже.</p>
+        {% else %}
+            <p>Пожалуйста, <a href="{{ login_url }}">войдите</a>, чтобы увидеть список домашних заданий.</p>
+        {% endif %}
+{% endif %}
