@@ -1,19 +1,28 @@
-<h1>Журнал</h1>
-<table>
-    <tr>
-        <th>Учитель</th>
-        <th>Домашнее задание</th>
-        <th>Ученик</th>
-        <th>Ответ</th>
-        <th>Оценка</th>
-    </tr>
-    {% for item in answers %}
-    <tr>
-        <td>{{ item.homework.teacher }}</td>
-        <td>{{ item.homework.title }}</td>
-        <td>{{ item.user.first_name }} {{ item.user.last_name }}</td>
-        <td>{{ item.answer_text }}</td>
-        <td>{{ item.grade }}</td>
-    </tr>
-    {% endfor %}
-</table>
+{% if user.is_authenticated %}
+    <h1>Оценки учащихся:</h1>
+    <table style="width: 100%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+        <tr>
+            <th style="border: 1px solid black;">Имя</th>
+            <th style="border: 1px solid black;">Фамилия</th>
+            <th style="border: 1px solid black;">Оценка</th>
+        </tr>
+        {% for user, user_grades in grades.items %}
+            <tr>
+                <td style="border: 1px solid black;">{{ user.first_name }}</td>
+                <td style="border: 1px solid black;">{{ user.last_name }}</td>
+                <td style="border: 1px solid black;">
+                    {% for grade in user_grades %}
+                        {{ grade }}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>    
+{% else %}
+    {% url 'users-login' as login_url %}
+    {% if not login_url %}
+        <p>В настоящее время страница входа недоступна. Попробуйте позже.</p>
+    {% else %}
+        <p>Пожалуйста, <a href="{{ login_url }}">войдите как учитель</a>, чтобы увидеть журнал.</p>
+    {% endif %}
+{% endif %}

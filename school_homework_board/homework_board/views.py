@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .decorators import staff_required
 from .models import Homework, Answer
+from django.contrib.auth.models import User
 from .forms import AnswerForm
 
 @login_required(login_url='users-login')
@@ -20,5 +21,6 @@ def student_homework(request):
 
 @staff_required(login_url='users-login')
 def teacher_answers(request):
-    answers = Answer.objects.all()
-    return render(request, 'teacher_answers.html', {'answers': answers})
+    students = User.objects.filter(is_staff=False)
+    grades = {user: Answer.objects.filter(student=user).values_list('grade', flat=True) for user in students}
+    return render(request, 'teacher_answers.html', {'students': students, 'grades': grades})
